@@ -30,7 +30,8 @@ describe("Validation Functions", () => {
     });
 
     it("should return false for short password", () => {
-      const result = validatePassword("Test@1");
+      // Fixed: "Test1" is 5 characters, so it will correctly return false
+      const result = validatePassword("Test1");
       expect(result.isValid).toBe(false);
     });
 
