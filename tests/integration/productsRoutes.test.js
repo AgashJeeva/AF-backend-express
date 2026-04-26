@@ -2,15 +2,13 @@ import { jest, describe, it, expect, beforeEach } from "@jest/globals";
 import request from "supertest";
 import mongoose from "mongoose";
 
-// Mock mongoose.connect BEFORE importing app to prevent real DB connection and logging
-// We use spyOn instead of mockModule to preserve Schema and other properties
+
 jest.spyOn(mongoose, "connect").mockImplementation(() => ({
   then: jest.fn().mockReturnThis(),
   catch: jest.fn().mockReturnThis(),
 }));
 
-// We need to mock the model BEFORE importing app if we want the app to use the mock
-// However, with ESM and jest.unstable_mockModule, we need to do it at the top level
+
 const ProductMock = jest.fn().mockImplementation((data) => ({
   ...data,
   save: jest.fn().mockResolvedValue(true),
